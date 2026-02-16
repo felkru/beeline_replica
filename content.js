@@ -1,4 +1,5 @@
 // content.js
+console.log("Beeline Content Script v1.1 loaded");
 
 function bionicWord(word) {
     if (word.length < 2) return word;
@@ -70,6 +71,30 @@ function processContent(settings) {
 
     if (settings.beeline) {
         applyBeelineColors();
+    }
+    
+    applyFont(settings.font);
+}
+
+function applyFont(enable) {
+    const styleId = 'beeline-font-style';
+    let style = document.getElementById(styleId);
+    
+    if (enable) {
+        if (!style) {
+            style = document.createElement('style');
+            style.id = styleId;
+            style.textContent = `
+                body, p, li, h1, h2, h3, h4, h5, h6, span, div, td, a {
+                    font-family: 'Georgia', serif !important;
+                }
+            `;
+            document.head.appendChild(style);
+        }
+    } else {
+        if (style) {
+            style.remove();
+        }
     }
 }
 
